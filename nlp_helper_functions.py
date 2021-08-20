@@ -11,6 +11,7 @@ import string
 # LANGUAGE PREPROCESSING
 
 def address_nan(iterable):
+    " This function converts float(nan) to string(nan) "
     processed_iterable = ["nan" if type(e) is float else e for e in iterable]
     return processed_iterable
 
