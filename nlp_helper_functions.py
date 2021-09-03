@@ -10,6 +10,7 @@ import string
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.preprocessing import OneHotEncoder
 import re
+from wvlib_light import lwvlib
 # LANGUAGE PREPROCESSING
 
 def address_nan(iterable):
@@ -66,9 +67,13 @@ def bag_of_words(iterable, max_features, ngram_range = (1,1), tfidf=True, return
     else:
         return vectorized
 
-def word_embedding():
-    pass
 
+class Embedding(lwvlib.WV):
+    def __init__(self, filename):
+        self.WV = lwvlib.load(filename, 100000, 5000000)
+    def vec(self, word):
+        return self.WV.w_to_normv(word)
+    
 
 
 if __name__=="__main__":
