@@ -67,14 +67,22 @@ def bag_of_words(iterable, max_features, ngram_range = (1,1), tfidf=True, return
     else:
         return vectorized
 
-
+# Wrapper class for lwvlib.WV
 class Embedding(lwvlib.WV):
+    # Loads the embeddings in the specified file
     def __init__(self, filename):
         self.WV = lwvlib.load(filename, 100000, 5000000)
+    # Vectorizes a single word
     def vec(self, word):
-        return self.WV.w_to_normv(word)
-    
-
+        return self.WV.w_to_normv(word.lower())
+    # Vectorizes words in a sentence and returns a list
+    def vec_sen(self, sen):
+        return [self.WV.w_to_normv(word for word in sen.split()]
+    # Vectorizes sentences in an iterable an returns a list of lists of embeddings
+    def vec_iter(self, it):
+        return [self.vec_sen(sen) for sen in it]
+    def get_url(self):
+        return "http://dl.turkunlp.org/finnish-embeddings/"
 
 if __name__=="__main__":
     print("NLP-tools imported successfully.")
